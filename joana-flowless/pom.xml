@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>joana-parent</artifactId>
+        <groupId>top.anemone.joana</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>joana-flowless</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>top.anemone.joana</groupId>
+            <artifactId>joana-util</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm.wala</groupId>
+            <artifactId>com.ibm.wala.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm.wala</groupId>
+            <artifactId>com.ibm.wala.util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.trove4j</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ibm.wala</groupId>
+            <artifactId>com.ibm.wala.shrike</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bea.xml</groupId>
+            <artifactId>jsr173-ri</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+</project>
