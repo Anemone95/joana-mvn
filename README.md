@@ -1,4 +1,21 @@
+# Introduction
+The original joana uses WALA 1.4.4-SNAPSHOT, which is a version that joana modified.
+So it has some bugs of old WALA version and can't support the new feature of wala - e.g., It can't build CFG when lack some of the dependencies.
+To deal with this, this repo rebuilds joana with the newest WALA version.
+
+# Build & Usage
+```java
+mvn clean install
+```
+
+Now it only provide joana-core. To import it in maven, use the following xml:
+```xml
+
+```
+
 # Changes
+These function are deprecated or missing in wala 1.5.4, so I have to replace them with the new one.
+However, they may cause exception. So I note them here to debug.
 ```java
 from com.ibm.wala.ssa.SSAInstruction#iindex
 to: com.ibm.wala.ssa.SSAInstruction#iIndex

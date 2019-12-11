@@ -45,3 +45,6 @@ sun\/swing\/.*
 java\/net\/.*
 java\/util\/.*
 java\/security\/.*
+java\/math\/.*
+java\/nio\/.*
+java\/io\/.*
