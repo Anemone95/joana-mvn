@@ -10,7 +10,11 @@ mvn clean install
 
 Now it only provide joana-core. To import it in maven, use the following xml:
 ```xml
-
+<dependency>
+    <groupId>top.anemone.joana</groupId>
+    <artifactId>joana-core</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
 ```
 
 # Changes
