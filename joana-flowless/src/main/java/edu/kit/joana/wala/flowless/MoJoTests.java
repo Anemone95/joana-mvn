@@ -17,6 +17,7 @@ import java.util.Set;
 
 import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IMethod;
+import com.ibm.wala.classLoader.Language;
 import com.ibm.wala.ipa.callgraph.AnalysisCache;
 import com.ibm.wala.ipa.callgraph.AnalysisCacheImpl;
 import com.ibm.wala.ipa.callgraph.AnalysisOptions;
@@ -117,7 +118,7 @@ public class MoJoTests {
 
 		// search for method in class
 		System.out.println("Looking for methods named '" + method.getName() + "'");
-		List<IMethod> possible = findPossibleMatches(cls.getAllMethods(), method.getName());
+		List<IMethod> possible = findPossibleMatches((Collection<IMethod>) cls.getAllMethods(), method.getName());
 		for (IMethod m : possible) {
 			System.out.println("\tFound possible match: " + m.toString());
 			Set<IMethod> possibleReferences = cha.getPossibleTargets(cls, m.getReference());
@@ -220,7 +221,7 @@ public class MoJoTests {
 		AnalysisOptions options = EntryUtil.createAnalysisOptionsWithPTS(cha, m, pointsTo, NO_SUBCLASSES);
 		AnalysisCache cache = new AnalysisCacheImpl();
 		SSAPropagationCallGraphBuilder builder =
-			com.ibm.wala.ipa.callgraph.impl.Util.makeVanillaZeroOneCFABuilder(options, cache, cha, scope);
+			com.ibm.wala.ipa.callgraph.impl.Util.makeVanillaZeroOneCFABuilder(Language.JAVA, options, cache, cha, scope);
 
 		System.out.print("Computing call graph with annotated root method... ");
 		CallGraph cg = builder.makeCallGraph(options);

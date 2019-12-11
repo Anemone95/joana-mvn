@@ -12,6 +12,7 @@ import com.ibm.wala.analysis.reflection.ReflectionContextSelector;
 import com.ibm.wala.classLoader.CallSiteReference;
 import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IMethod;
+import com.ibm.wala.classLoader.Language;
 import com.ibm.wala.ipa.callgraph.AnalysisCache;
 import com.ibm.wala.ipa.callgraph.AnalysisOptions;
 import com.ibm.wala.ipa.callgraph.AnalysisScope;
@@ -183,7 +184,7 @@ public final class WalaPointsToUtil {
         
         final int instancePolicy = ZeroXInstanceKeys.NONE;
 
-	    return ZeroXCFABuilder.make(cha, options, cache, contextSelector, contextInterpreter, instancePolicy);
+	    return ZeroXCFABuilder.make(Language.JAVA, cha, options, cache, contextSelector, contextInterpreter, instancePolicy);
 	}
 
 	public static CallGraphBuilder<InstanceKey> makeContextSensSite(final AnalysisOptions options, final IAnalysisCacheView cache,
@@ -215,7 +216,7 @@ public final class WalaPointsToUtil {
                                     ZeroXInstanceKeys.SMUSH_MANY |
                                     ZeroXInstanceKeys.SMUSH_THROWABLES;
 
-	    return ZeroXCFABuilder.make(cha, options, cache, contextSelector, contextInterpreter, instancePolicy);
+	    return ZeroXCFABuilder.make(Language.JAVA, cha, options, cache, contextSelector, contextInterpreter, instancePolicy);
 	}
 
 	public static CallGraphBuilder<InstanceKey> makeObjectSens(final ExtendedAnalysisOptions options, final IAnalysisCacheView cache,
@@ -285,9 +286,8 @@ public final class WalaPointsToUtil {
             }
         }
 
-	    final SSAPropagationCallGraphBuilder result =
-	    	new nCFABuilder(n, cha, options, cache, null, null);
-	   
+	    final SSAPropagationCallGraphBuilder result =Util.makeZeroCFABuilder(Language.JAVA, options, cache, cha, scope);
+
         { // Set the ContextSelector
             if (additionalContextSelector != null) {
                 final ContextSelector nCFA = result.getContextSelector();

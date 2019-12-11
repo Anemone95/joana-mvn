@@ -9,16 +9,9 @@ package edu.kit.joana.wala.core.params.objgraph;
 
 import static edu.kit.joana.wala.util.pointsto.WalaPointsToUtil.unify;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import com.google.common.collect.Iterators;
 import com.ibm.wala.ipa.callgraph.CGNode;
@@ -376,6 +369,11 @@ public class ModRefCandidateGraph implements Graph<ModRefCandidate> {
 				throw new UnsupportedOperationException();
 			}
 		};
+	}
+
+	@Override
+	public Stream<ModRefCandidate> stream() {
+		return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), Spliterator.ORDERED), false);
 	}
 
 	@Override

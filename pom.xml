@@ -14,7 +14,7 @@
         <module>joana-flowless</module>
     </modules>
     <properties>
-        <wala.version>1.4.4-SNAPSHOT</wala.version>
+        <wala.version>1.5.4</wala.version>
         <jgrapht.version>0.9.2</jgrapht.version>
     </properties>
 
@@ -95,6 +95,12 @@
                 <groupId>com.bea.xml</groupId>
                 <artifactId>jsr173-ri</artifactId>
                 <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.javaparser</groupId>
+                <artifactId>javaparser-core</artifactId>
+                <version>3.0.0-RC.1</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

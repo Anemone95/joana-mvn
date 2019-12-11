@@ -19,6 +19,7 @@ import java.util.Set;
 import com.ibm.wala.classLoader.IClass;
 import com.ibm.wala.classLoader.IField;
 import com.ibm.wala.classLoader.IMethod;
+import com.ibm.wala.classLoader.Language;
 import com.ibm.wala.ipa.callgraph.AnalysisCache;
 import com.ibm.wala.ipa.callgraph.AnalysisCacheImpl;
 import com.ibm.wala.ipa.callgraph.AnalysisOptions;
@@ -553,7 +554,7 @@ public class MoJo {
 	public CallGraphResult computeContextInsensitiveCallGraph(AnalysisOptions options) throws IllegalArgumentException, CancelException {
 		AnalysisCache cache = new AnalysisCacheImpl();
 		SSAPropagationCallGraphBuilder builder =
-			com.ibm.wala.ipa.callgraph.impl.Util.makeZeroCFABuilder(options, cache, cha, cha.getScope());
+			com.ibm.wala.ipa.callgraph.impl.Util.makeZeroCFABuilder(Language.JAVA, options, cache, cha, cha.getScope());
 
 		CallGraph cg = computeCallGraph(options, builder);
 
@@ -573,7 +574,7 @@ public class MoJo {
 	public CallGraphResult computeContextSensitiveCallGraph(AnalysisOptions options) throws IllegalArgumentException, CancelException {
 		AnalysisCache cache = new AnalysisCacheImpl();
 		SSAPropagationCallGraphBuilder builder =
-			com.ibm.wala.ipa.callgraph.impl.Util.makeVanillaZeroOneCFABuilder(options, cache, cha, cha.getScope());
+			com.ibm.wala.ipa.callgraph.impl.Util.makeVanillaZeroOneCFABuilder(Language.JAVA, options, cache, cha, cha.getScope());
 
 		CallGraph cg = computeCallGraph(options, builder);
 
@@ -689,7 +690,7 @@ public class MoJo {
 		}
 
 		assert debug("Looking for methods named '" + method.getName() + "'");
-		List<IMethod> possible = findPossibleMatches(cls.getAllMethods(), method);
+		List<IMethod> possible = findPossibleMatches((Collection<IMethod>) cls.getAllMethods(), method);
 		if (possible.size() != 1) {
 			if (possible.size() == 0) {
 				throw new NoSuchElementException("A method named " + method.getName() + " with "

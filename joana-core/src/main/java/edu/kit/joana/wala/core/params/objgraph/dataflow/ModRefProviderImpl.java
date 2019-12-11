@@ -164,7 +164,8 @@ public class ModRefProviderImpl implements ModRefProvider {
 		
 		if (maxSet >= 0) {
 			// implicitly creates a copy just large enough to hold all necessary bits
-			return new BitVectorIntSet(bvMayRef, maxSet);
+			// TODO
+			return new BitVectorIntSet(bvMayRef);
 		} else {
 			return EmptyIntSet.instance;
 		}

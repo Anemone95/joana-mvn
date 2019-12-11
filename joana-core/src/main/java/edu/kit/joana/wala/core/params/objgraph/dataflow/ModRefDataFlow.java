@@ -623,9 +623,9 @@ public class ModRefDataFlow {
 				
 				if (maxSet >= 0) {
 					// implicitly creates a copy just large enough to hold all necessary bits
-					mayRead.put(n, new OrdinalSet<ModRefControlFlowGraph.Node>(new BitVectorIntSet(bvMayRef, maxSet), domain));
+					mayRead.put(n, new OrdinalSet<ModRefControlFlowGraph.Node>(new BitVectorIntSet(bvMayRef), domain));
 				} else {
-					mayRead.put(n, new OrdinalSet<ModRefControlFlowGraph.Node>(new EmptyIntSet(),                     domain));
+					mayRead.put(n, new OrdinalSet<ModRefControlFlowGraph.Node>(new EmptyIntSet(), domain));
 				}
 			}
 		});

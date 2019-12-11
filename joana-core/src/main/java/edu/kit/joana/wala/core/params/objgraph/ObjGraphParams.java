@@ -1327,7 +1327,8 @@ public final class ObjGraphParams {
 		final Set<ModRefRootCandidate> roots = findRoots(n, pa);
 		final Set<ModRefFieldCandidate> reachable = new HashSet<ModRefFieldCandidate>();
 		final LinkedList<ModRefFieldCandidate> work = new LinkedList<ModRefFieldCandidate>();
-		for (IntIterator candIt = candidates.intIteratorSorted(); candIt.hasNext(); ) {
+		// TODO
+		for (IntIterator candIt = candidates.intIterator(); candIt.hasNext(); ) {
 			int x = candIt.next();
 			work.add(map.getMappedObject(x));
 		}

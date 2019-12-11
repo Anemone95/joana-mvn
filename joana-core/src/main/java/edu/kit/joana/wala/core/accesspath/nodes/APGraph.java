@@ -153,31 +153,31 @@ public final class APGraph extends AbstractNumberedGraph<APNode> {
 			if (!f.field.isStatic()) {
 				final SSAInstruction instr = pdg.getInstruction(f.node);
 				{
-				final APFieldNode apn = APFieldNode.createFieldGet(instr.iindex, f, f.base);
+				final APFieldNode apn = APFieldNode.createFieldGet(instr.iIndex(), f, f.base);
 				pdg2ap.put(f.base, apn);
 				addNode(apn);
 				} {
-				final APNormNode apfield = new APNormNode(instr.iindex, f.accfield);
+				final APNormNode apfield = new APNormNode(instr.iIndex(), f.accfield);
 				pdg2ap.put(f.accfield, apfield);
 				addNode(apfield);
 				}
-				final APNormNode apread = new APNormNode(instr.iindex, f.node);
+				final APNormNode apread = new APNormNode(instr.iIndex(), f.node);
 				pdg2ap.put(f.node, apread);
 				addNode(apread);
 
 				if (f.field.isArray()) {
-					final APNormNode apindex = new APNormNode(instr.iindex, f.index);
+					final APNormNode apindex = new APNormNode(instr.iIndex(), f.index);
 					pdg2ap.put(f.index, apindex);
 					addNode(apindex);
 				}
 			} else {
 				final SSAInstruction instr = pdg.getInstruction(f.node);
 				if (instr != null) {
-					final APNormNode apn = new APNormNode(instr.iindex, f.node);
+					final APNormNode apn = new APNormNode(instr.iIndex(), f.node);
 					pdg2ap.put(f.node, apn);
 					addNode(apn);
 
-					final APNormNode apfield = new APNormNode(instr.iindex, f.accfield);
+					final APNormNode apfield = new APNormNode(instr.iIndex(), f.accfield);
 					pdg2ap.put(f.node, apfield);
 					addNode(apfield);
 				}
@@ -188,31 +188,31 @@ public final class APGraph extends AbstractNumberedGraph<APNode> {
 			if (!f.field.isStatic()) {
 				final SSAInstruction instr = pdg.getInstruction(f.node);
 				{
-				final APFieldNode apn = APFieldNode.createFieldGet(instr.iindex, f, f.base);
+				final APFieldNode apn = APFieldNode.createFieldGet(instr.iIndex(), f, f.base);
 				pdg2ap.put(f.base, apn);
 				addNode(apn);
 				} {
-				final APNormNode apfield = new APNormNode(instr.iindex, f.accfield);
+				final APNormNode apfield = new APNormNode(instr.iIndex(), f.accfield);
 				pdg2ap.put(f.accfield, apfield);
 				addNode(apfield);
 				}
-				final APNormNode apwrite = new APNormNode(instr.iindex, f.node);
+				final APNormNode apwrite = new APNormNode(instr.iIndex(), f.node);
 				pdg2ap.put(f.node, apwrite);
 				addNode(apwrite);
 
 				if (f.field.isArray()) {
-					final APNormNode apindex = new APNormNode(instr.iindex, f.index);
+					final APNormNode apindex = new APNormNode(instr.iIndex(), f.index);
 					pdg2ap.put(f.index, apindex);
 					addNode(apindex);
 				}
 			} else {
 				final SSAInstruction instr = pdg.getInstruction(f.node);
 				if (instr != null) {
-					final APNormNode apn = new APNormNode(instr.iindex, f.node);
+					final APNormNode apn = new APNormNode(instr.iIndex(), f.node);
 					pdg2ap.put(f.node, apn);
 					addNode(apn);
 
-					final APNormNode apfield = new APNormNode(instr.iindex, f.accfield);
+					final APNormNode apfield = new APNormNode(instr.iIndex(), f.accfield);
 					pdg2ap.put(f.node, apfield);
 					addNode(apfield);
 				}
@@ -233,7 +233,7 @@ public final class APGraph extends AbstractNumberedGraph<APNode> {
 			case PHI: {
 				final SSAInstruction instr = pdg.getInstruction(n);
 				if (instr != null) {
-					final APNormNode apn = new APNormNode(instr.iindex, n);
+					final APNormNode apn = new APNormNode(instr.iIndex(), n);
 					pdg2ap.put(n, apn);
 					addNode(apn);
 				}
@@ -241,7 +241,7 @@ public final class APGraph extends AbstractNumberedGraph<APNode> {
 			case NEW: {
 				final SSANewInstruction instr = (SSANewInstruction) pdg.getInstruction(n);
 				final AP init = new AP(new AP.NewNode(pdg.cgNode, instr.getNewSite(), n.getId()));
-				final APNewNode apn = APNewNode.create(instr.iindex, n, init);
+				final APNewNode apn = APNewNode.create(instr.iIndex(), n, init);
 				addInitialValue(apn, init);
 				root2pdg.put(init.getRoot(), n);
 				pdg2ap.put(n, apn);
@@ -350,7 +350,7 @@ public final class APGraph extends AbstractNumberedGraph<APNode> {
 
 	private APCallNode createCallNode(final PDGNode n) {
 		final SSAInstruction instr = pdg.getInstruction(n);
-		final int iindex = instr.iindex;
+		final int iindex = instr.iIndex();
 		final PDGNode[] pIn = pdg.getParamIn(n);
 		final APActualParamNode[] apIn = new APActualParamNode[pIn.length];
 

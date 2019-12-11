@@ -596,35 +596,35 @@ public final class LocalKillingDefs {
 			 */
 			TIntSet ret = new TIntHashSet();
 			for (IExplodedBasicBlock bb : cfg) {
-				if (bb.getInstruction() != null) ret.add(bb.getInstruction().iindex);
+				if (bb.getInstruction() != null) ret.add(bb.getInstruction().iIndex());
 			}
 			return ret;
 		}
 	    public void visitInvoke(final SSAInvokeInstruction ii) {
-	    	accesses.addCall(ii.iindex, ii.getCallSite());
+	    	accesses.addCall(ii.iIndex(), ii.getCallSite());
 	    }
 
 	    public void visitArrayLoad(final SSAArrayLoadInstruction ii) {
-	        if (!reachableIIndices.contains(ii.iindex)) return;
+	        if (!reachableIIndices.contains(ii.iIndex())) return;
 	    	final int base = ii.getArrayRef();
 	    	final int index = ii.getIndex();
 	    	final ParameterField field = pfact.getArrayField(ii.getElementType());
 	    	final int value = ii.getDef();
-	    	accesses.addArrayRead(ii.iindex, field, base, index, value);
+	    	accesses.addArrayRead(ii.iIndex(), field, base, index, value);
 	    }
 
 	    public void visitArrayStore(final SSAArrayStoreInstruction ii) {
-	        if (!reachableIIndices.contains(ii.iindex)) return;
+	        if (!reachableIIndices.contains(ii.iIndex())) return;
 	    	hasWrite = true;
 	    	final int base = ii.getArrayRef();
 	    	final int index = ii.getIndex();
 	    	final ParameterField field = pfact.getArrayField(ii.getElementType());
 	    	final int value = ii.getValue();
-	    	accesses.addArrayWrite(ii.iindex, field, base, index, value);
+	    	accesses.addArrayWrite(ii.iIndex(), field, base, index, value);
 	    }
 
 	    public void visitGet(final SSAGetInstruction ii) {
-	        if (!reachableIIndices.contains(ii.iindex)) return;
+	        if (!reachableIIndices.contains(ii.iIndex())) return;
 	    	final IField f = cha.resolveField(ii.getDeclaredField());
 	    	if (f == null) {
 	    		defaultVisit(ii);
@@ -634,16 +634,16 @@ public final class LocalKillingDefs {
 
 	    	if (ii.isStatic()) {
 		    	final int value = ii.getDef();
-		    	accesses.addStaticRead(ii.iindex, field, value);
+		    	accesses.addStaticRead(ii.iIndex(), field, value);
 	    	} else {
 		    	final int base = ii.getRef();
 		    	final int value = ii.getDef();
-		    	accesses.addFieldRead(ii.iindex, field, base, value);
+		    	accesses.addFieldRead(ii.iIndex(), field, base, value);
 	    	}
 	    }
 
 	    public void visitPut(final SSAPutInstruction ii) {
-	        if (!reachableIIndices.contains(ii.iindex)) return;
+	        if (!reachableIIndices.contains(ii.iIndex())) return;
 	    	final IField f = cha.resolveField(ii.getDeclaredField());
 	    	if (f == null) {
 	    		defaultVisit(ii);
@@ -654,18 +654,18 @@ public final class LocalKillingDefs {
 
 	    	if (ii.isStatic()) {
 		    	final int value = ii.getVal();
-		    	accesses.addStaticWrite(ii.iindex, field, value);
+		    	accesses.addStaticWrite(ii.iIndex(), field, value);
 	    	} else {
 		    	final int base = ii.getRef();
 		    	final int value = ii.getVal();
-		    	accesses.addFieldWrite(ii.iindex, field, base, value);
+		    	accesses.addFieldWrite(ii.iIndex(), field, base, value);
 	    	}
 	    }
 
 	    private void defaultVisit(final SSAInstruction ii) {
-	        if (!reachableIIndices.contains(ii.iindex)) return;
-	    	if (ii.iindex >= 0) {
-	    		accesses.addDummy(ii.iindex);
+	        if (!reachableIIndices.contains(ii.iIndex())) return;
+	    	if (ii.iIndex() >= 0) {
+	    		accesses.addDummy(ii.iIndex());
 	    	}
 	    }
 

@@ -8,6 +8,7 @@
 package edu.kit.joana.wala.util.pointsto;
 
 import com.ibm.wala.classLoader.IMethod;
+import com.ibm.wala.classLoader.Language;
 import com.ibm.wala.ipa.callgraph.AnalysisCache;
 import com.ibm.wala.ipa.callgraph.AnalysisOptions;
 import com.ibm.wala.ipa.callgraph.AnalysisScope;
@@ -84,7 +85,7 @@ public class ObjSensZeroXCFABuilder extends ZeroXCFABuilder {
 	public ObjSensZeroXCFABuilder(final IClassHierarchy cha, final ExtendedAnalysisOptions options, final IAnalysisCacheView cache,
 			final ContextSelector objSensSelector, final SSAContextInterpreter appContextInterpreter,
 			final int instancePolicy) {
-		super(cha, options, cache, objSensSelector, appContextInterpreter, instancePolicy);
+		super(Language.JAVA, cha, options, cache, objSensSelector, appContextInterpreter, instancePolicy);
 	}
 
 	@Override

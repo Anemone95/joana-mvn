@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import com.ibm.wala.classLoader.CallSiteReference;
 import com.ibm.wala.classLoader.IClass;
@@ -29,6 +30,7 @@ import com.ibm.wala.util.intset.BitVectorIntSet;
 import com.ibm.wala.util.intset.IntSet;
 
 import edu.kit.joana.wala.core.interference.ThreadInformationProvider;
+import edu.kit.joana.wala.util.NotImplementedException;
 
 /**
  *
@@ -107,6 +109,11 @@ public class NoThreadStartToRunCallGraph implements CallGraph {
 	@Override
 	public Iterator<CGNode> iterator() {
 		return cg.iterator();
+	}
+
+	@Override
+	public Stream<CGNode> stream() {
+        return cg.stream();
 	}
 
 	@Override

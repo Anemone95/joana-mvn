@@ -291,7 +291,7 @@ public final class AccessManager<T> {
 	}
 
 	public Access<T> getAccForInstr(final SSAInstruction instr) {
-		return iindex2acc.get(instr.iindex);
+		return iindex2acc.get(instr.iIndex());
 	}
 
 	public Iterable<FieldAccess<T>> getReads() {

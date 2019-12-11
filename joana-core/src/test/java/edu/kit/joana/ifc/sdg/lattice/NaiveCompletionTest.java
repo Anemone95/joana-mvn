@@ -1,4 +1,4 @@
-package edu.kit.joana.ifc.sdg.lattice.tests;
+package edu.kit.joana.ifc.sdg.lattice;
 
 import static org.junit.Assert.*;
 

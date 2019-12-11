@@ -89,8 +89,8 @@ public final class PrettyWalaNames {
 	}
 	
 	public static final String instr2string(final IR ir, final SSAInstruction instr, final SSACFG cfg) {
-		final StringBuffer txt = (instr.iindex >= 0 
-				? new StringBuffer(iindex2str(instr.iindex) + ":\t")
+		final StringBuffer txt = (instr.iIndex() >= 0
+				? new StringBuffer(iindex2str(instr.iIndex()) + ":\t")
 				: new StringBuffer());
 		final SymbolTable stab = ir.getSymbolTable();
 

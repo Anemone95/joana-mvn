@@ -43,7 +43,7 @@ public final class Pts2AliasGraph {
 
 		final List<Pts2AliasParam> roots = new LinkedList<Pts2AliasParam>();
 
-		for (int i = 0; i < invk.getNumberOfParameters(); i++) {
+		for (int i = 0; i < invk.getNumberOfUses(); i++) {
 			final int use = invk.getUse(i);
 
 			final PointerKey pkParam = pts.getHeapModel().getPointerKeyForLocal(node, use);

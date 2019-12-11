@@ -177,8 +177,8 @@ public final class PDG extends DependenceGraph implements INodeWithNumber {
 		this.params = new PDGNode[method.getNumberOfParameters()];
 		for (int i = 0; i < params.length; i++) {
 			final String pName;
-			if (!this.getMethod().isNative() && this.getMethod().getLocalVariableName(0, i) != null) {
-				pName = " $" + this.getMethod().getLocalVariableName(0, i) + " ";
+			if (!this.getMethod().isNative() && this.getLocalVariableName(0, i, "UNK") != null) {
+				pName = " $" + this.getLocalVariableName(0, i, "UNK") + " ";
 			} else {
 				pName = "";
 			}
@@ -1150,7 +1150,7 @@ public final class PDG extends DependenceGraph implements INodeWithNumber {
 						throw new IllegalStateException("No node for instruction: " + instr + " in " + method.getName().toString());
 					}
 
-					final int index = instr.iindex;
+					final int index = instr.iIndex();
 					if (index == SSAInstruction.NO_INDEX) {
 						if (instr instanceof SSAPiInstruction || instr instanceof SSAPhiInstruction || instr instanceof SSAGetCaughtExceptionInstruction) {
 							node.setSourceLocation(defSrcLoc);
@@ -1391,7 +1391,7 @@ public final class PDG extends DependenceGraph implements INodeWithNumber {
 			if (aliases != null) {
 				this.params[i].setLocalDefNames(aliases.toArray(new String[aliases.size()]));
 			} else {
-				this.params[i].setLocalDefNames(new String[] { this.getMethod().getLocalVariableName(0, i) });
+				this.params[i].setLocalDefNames(new String[] { this.getLocalVariableName(0, i, "UNK") });
 			}
 		}
 	}
@@ -2447,4 +2447,14 @@ public final class PDG extends DependenceGraph implements INodeWithNumber {
 		return builder.isImmutableStub(tref);
 	}
 
+	public String getLocalVariableName(int bcIndex, int localNumber, String defaultName){
+		// TODO @Anemone this.getMethod().getLocalVariableName(0, i) raise an null pointer exception in <Ljava/lang/Class>
+        String variableName=null;
+        try{
+			variableName=this.getMethod().getLocalVariableName(bcIndex, localNumber);
+        } catch (NullPointerException ignored){
+            variableName=defaultName;
+        }
+        return variableName;
+	}
 }

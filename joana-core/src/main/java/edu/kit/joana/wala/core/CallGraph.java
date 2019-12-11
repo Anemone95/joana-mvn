@@ -226,7 +226,7 @@ public final class CallGraph extends AbstractJoanaGraph<CallGraph.Node, CallGrap
 
 						final Node tgtNode = findOrCreate(tgtcg);
 
-						addEdge(curNode, tgtNode, invk.iindex, invk.isStatic());
+						addEdge(curNode, tgtNode, invk.iIndex(), invk.isStatic());
 
 						if (!visited.contains(tgtcg)) {
 							visited.add(tgtcg);
