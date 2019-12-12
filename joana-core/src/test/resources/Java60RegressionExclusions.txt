@@ -10,9 +10,10 @@ java\/rmi\/.*
 java\/text\/.*
 java\/time\/.*
 javafx\/.*
-javafx\/beans\/.*
+javafx\/.*
 javafx\/collections\/.*
 javafx\/scene\/.*
+javax\/.*
 javax\/accessibility\/.*
 javax\/activation\/.*
 javax\/activity\/.*
@@ -48,3 +49,5 @@ java\/security\/.*
 java\/math\/.*
 java\/nio\/.*
 java\/io\/.*
+java\/awt\/.
+java\/lang\/ClassLoader

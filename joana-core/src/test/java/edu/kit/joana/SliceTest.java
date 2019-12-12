@@ -26,9 +26,11 @@ import edu.kit.joana.ifc.sdg.mhpoptimization.CSDGPreprocessor;
 import edu.kit.joana.utils.AppEntrypointFactory;
 import edu.kit.joana.utils.Formater;
 import edu.kit.joana.utils.JoanaLineSlicer;
+import edu.kit.joana.wala.core.prune.NodeLimitPruner;
 import edu.kit.joana.wala.core.ExternalCallCheck;
 import edu.kit.joana.wala.core.Main;
 import edu.kit.joana.wala.core.SDGBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,7 @@ public class SliceTest {
     private static final Logger LOG = LoggerFactory.getLogger(SliceTest.class);
 
     @Test
+    @Ignore
     public void sliceTest() throws GraphIntegrity.UnsoundGraphException, CancelException, ClassHierarchyException, IOException {
         String jarFile=SliceTest.class.getClassLoader().getResource("joana-target-1.0-SNAPSHOT.jar").getFile();
         String[] libJars={};
@@ -62,16 +65,16 @@ public class SliceTest {
         String result=computeSlice(jarFile, libJars, exclusionsFile, entryClass, entryMethod, entryRef, sink, pdgFile);
         System.out.println(result);
     }
-
     @Test
+    @Ignore
     public void sliceTest2() throws GraphIntegrity.UnsoundGraphException, CancelException, ClassHierarchyException, IOException {
-        String jarFile=SliceTest.class.getClassLoader().getResource("groovy-3.0.0-beta-2.jar").getFile();
+        String jarFile=SliceTest.class.getClassLoader().getResource("groovy-all-2.4.0.jar").getFile();
         String[] libJars={};
         String exclusionsFile=null;
         String entryClass="Lgroovy/lang/GroovyClassLoader";
-        String entryMethod="isSourceNewer";
-        String entryRef="(Ljava/net/URL;Ljava/lang/Class;)Z";
-        JoanaLineSlicer.Line sink = new JoanaLineSlicer.Line("groovy/lang/GroovyClassLoader.java", 1085);
+        String entryMethod="recompile";
+        String entryRef="(Ljava/net/URL;Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Class;";
+        JoanaLineSlicer.Line sink = new JoanaLineSlicer.Line("groovy/lang/GroovyClassLoader.java", 765);
         String pdgFile=null;
 
         String result=computeSlice(jarFile, libJars, exclusionsFile, entryClass, entryMethod, entryRef, sink, pdgFile);
@@ -178,6 +181,8 @@ public class SliceTest {
         scfg.debugAccessPath = false;
         scfg.debugStaticInitializers = false;
         scfg.entrypointFactory=new AppEntrypointFactory();
+        scfg.doParallel=false;
+        scfg.cgPruner=new NodeLimitPruner(100);
         return scfg;
     }
 

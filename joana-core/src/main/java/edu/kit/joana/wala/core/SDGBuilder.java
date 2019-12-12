@@ -21,6 +21,8 @@ import java.util.TreeSet;
 import java.util.function.Function;
 
 import com.ibm.wala.ipa.callgraph.*;
+import edu.kit.joana.wala.core.prune.CGPruner;
+import edu.kit.joana.wala.core.prune.DefaultCGPruner;
 import org.jgrapht.DirectedGraph;
 
 import com.google.common.collect.Sets;
@@ -117,7 +119,6 @@ public class SDGBuilder implements CallGraphFilter, SDGBuildArtifacts {
 
     private final static Logger debug = Log.getLogger(Log.L_WALA_CORE_DEBUG);
     private final static boolean IS_DEBUG = debug.isEnabled();
-    private final static ReflectionOptions JOANA=ReflectionOptions.ONE_FLOW_TO_CASTS_APPLICATION_GET_METHOD;
 
     public final static int PDG_FAKEROOT_ID = 0;
     public final static int PDG_THREAD_START_ID = 1;
@@ -1247,7 +1248,13 @@ public class SDGBuilder implements CallGraphFilter, SDGBuildArtifacts {
     }
 
     public static ExtendedAnalysisOptions createSingleEntryOptions(SDGBuilderConfig cfg) {
-        return createMultipleEntryOptions(cfg.scope, cfg.cha, cfg.objSensFilter, cfg.ext != null ? cfg.ext.resolveReflection() : false, cfg.methodTargetSelector, Collections.singletonList(cfg.entry), cfg.entrypointFactory);
+        ExtendedAnalysisOptions options=createMultipleEntryOptions(cfg.scope, cfg.cha, cfg.objSensFilter, cfg.ext != null ? cfg.ext.resolveReflection() : false, cfg.methodTargetSelector, Collections.singletonList(cfg.entry), cfg.entrypointFactory);
+        // copy original options to the real options
+        if(cfg.options!=null){
+            // TODO @Anemone add other options
+            options.setMaxNumberOfNodes(cfg.options.getMaxNumberOfNodes());
+        }
+        return options;
     }
 
     public static ExtendedAnalysisOptions createMultipleEntryOptions(AnalysisScope scope, IClassHierarchy cha, ObjSensZeroXCFABuilder.MethodFilter objSensFilter,
@@ -1395,8 +1402,7 @@ public class SDGBuilder implements CallGraphFilter, SDGBuildArtifacts {
         com.ibm.wala.ipa.callgraph.CallGraph curcg = walaCG.cg;
 
         if (prune >= 0) {
-            CallGraphPruning cgp = new CallGraphPruning(walaCG.cg);
-            Set<CGNode> appl = cgp.findNodes(prune, cfg.pruningPolicy);
+            Set<CGNode> appl = cfg.cgPruner.prune(cfg, walaCG.cg);
             PrunedCallGraph pcg = new PrunedCallGraph(walaCG.cg, appl);
             curcg = pcg;
         }
@@ -2190,6 +2196,8 @@ public class SDGBuilder implements CallGraphFilter, SDGBuildArtifacts {
          * For using customize entrypoint
          */
         public EntrypointFactory entrypointFactory = new SubtypesEntrypointFactory();
+
+        public CGPruner cgPruner=new DefaultCGPruner();
 
         public SDGBuilderConfig() {
         }
