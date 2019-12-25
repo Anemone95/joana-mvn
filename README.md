@@ -18,6 +18,7 @@ Now it only provide joana-core. To import it in maven, use the following xml:
 ```
 
 # Changes
+## 19/12/11
 These function are deprecated or missing in wala 1.5.4, so I have to replace them with the new one.
 However, they may cause exception. So I note them here to debug.
 ```java
@@ -62,4 +63,23 @@ to: new OrdinalSet<FieldAccess>(bv.getValue(), genReach.getLatticeValues()).iter
 from: IntSet#intIteratorSorted() 
 to: IntSet#intIterator()
 
+```
+And some modifications on edu.kit.joana.wala.core.PDGNodeCreationVisitor#PDGNodeCreationVisitor.
+
+## 19/12/25
+Fix null pointer exception in edu.kit.joana.ifc.sdg.mhpoptimization.JoinAnalysis#collectSDGNodesFromIds:
+```plain
+private static Set<SDGNode> collectSDGNodesFromIds(SDG sdg, int[] ids) {
+    Set<SDGNode> ret = new HashSet<SDGNode>(); // possible allocation sites
+                                                // of the thread on which
+                                                // join() is called
++   /** @Anemone fix null pointer exception */
++   if(ids==null){
++       return ret;
++   }
+    for (int alloc_id : ids) {
+        ret.add(sdg.getNode(alloc_id));
+    }
+    return ret;
+}
 ```
