@@ -98,6 +98,10 @@ public class JoinAnalysis {
 		Set<SDGNode> ret = new HashSet<SDGNode>(); // possible allocation sites
 													// of the thread on which
 													// join() is called
+		/** @Anemone fix null pointer exception */
+		if(ids==null){
+			return ret;
+		}
 		for (int alloc_id : ids) {
 			ret.add(sdg.getNode(alloc_id));
 		}
