@@ -8,7 +8,7 @@ To deal with this, this repo rebuilds joana with the newest WALA version.
 mvn clean install
 ```
 
-Now it only provide joana-core. To import it in maven, use the following xml:
+To import it in maven, use the following xml:
 ```xml
 <dependency>
     <groupId>top.anemone.joana</groupId>
