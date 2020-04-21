@@ -3,6 +3,8 @@ The original joana uses WALA 1.4.4-SNAPSHOT, which is a version that joana modif
 So it has some bugs of old WALA version and can't support the new feature of wala - e.g., It can't build CFG when lack some of the dependencies.
 To deal with this, this repo rebuilds joana with the newest WALA version.
 
+[中文文档](blob/master/README.zh.md)
+
 # Build & Usage
 ```java
 mvn clean install
